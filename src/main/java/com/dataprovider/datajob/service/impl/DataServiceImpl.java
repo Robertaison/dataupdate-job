@@ -10,6 +10,7 @@ import com.dataprovider.datajob.publisher.TraceDataPublisher;
 import com.dataprovider.datajob.repository.ScoreDataRepository;
 import com.dataprovider.datajob.service.DataService;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,40 +31,50 @@ public class DataServiceImpl implements DataService {
   private final ScoreDataRepository scoreDataRepository;
 
   @Override
-  public void processAndSendSensitiveData(SensitiveDataDto dto) {
+  public void processAndSendSensitiveData(List<SensitiveDataDto> dtoList) {
     sensitiveDataPublisher.send(null);
   }
 
   @Override
-  public void processAndSendTraceData(TraceDataDto dto) {
+  public void processAndSendTraceData(List<TraceDataDto> dtoList) {
     traceDataPublisher.send(null);
   }
 
   @Override
-  public void processAndSendScoreData(ScoreDataDto dto) {
-    log.info("M=ProcessAndSendScoreData, dto={}", dto);
-    LocalDateTime updateAt = LocalDateTime.parse(dto.getUpdateAt());
-    Optional<ScoreDataEntity> scoreDataEntity = scoreDataRepository.findByCpf(dto.getCpf());
+  public void processAndSendScoreData(List<ScoreDataDto> dtoList) {
+    log.info("M=ProcessAndSendScoreData, dto={}", dtoList);
 
-    scoreDataEntity.ifPresentOrElse(
-        scoreData -> {
-          if (hasUpdate(updateAt, scoreData.getUpdateAt())) {
-            log.info("M=ProcessAndSendScoreData, cpf={} hasUpdate, updatedAt={}", dto.getCpf(), updateAt);
+    dtoList.parallelStream().forEach(dto -> {
+      LocalDateTime updateAt = LocalDateTime.parse(dto.getUpdateAt());
+      Optional<ScoreDataEntity> scoreDataEntity = scoreDataRepository.findByCpf(dto.getCpf());
+
+      scoreDataEntity.ifPresentOrElse(
+          scoreData -> {
+            if (hasUpdate(updateAt, scoreData.getUpdateAt())) {
+              log.info("M=ProcessAndSendScoreData, cpf={} hasUpdate, updatedAt={}",
+                  dto.getCpf(),
+                  updateAt);
+
+              scoreDataPublisher.send(dto);
+              scoreData.setUpdateAt(updateAt);
+              scoreDataRepository.saveAndFlush(scoreData);
+            }
+            log.info("M=ProcessAndSendScoreData, cpf={} updated", dto.getCpf());
+          }, () -> {
+            log.info("M=ProcessAndSendScoreData, cpf={} was not registered, registeredAt={}",
+                dto.getCpf(),
+                updateAt);
+
             scoreDataPublisher.send(dto);
-            scoreData.setUpdateAt(updateAt);
-            scoreDataRepository.saveAndFlush(scoreData);
-          }
-          log.info("M=ProcessAndSendScoreData, cpf={} updated", dto.getCpf());
-        }, () -> {
-          log.info("M=ProcessAndSendScoreData, cpf was not registered, registeredAt={}", updateAt);
-          scoreDataPublisher.send(dto);
-          scoreDataRepository.save(
-              ScoreDataEntity.builder()
-                  .cpf(dto.getCpf())
-                  .updateAt(updateAt)
-                  .build()
-          );
-        });
+            scoreDataRepository.save(
+                ScoreDataEntity.builder()
+                    .cpf(dto.getCpf())
+                    .updateAt(updateAt)
+                    .build()
+            );
+          });
+    });
+
   }
 
   public ScoreDataEntity getData(String cpf) {

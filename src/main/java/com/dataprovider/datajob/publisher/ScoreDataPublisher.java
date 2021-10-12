@@ -15,9 +15,9 @@ public class ScoreDataPublisher {
 
   private final RabbitTemplate rabbitTemplate;
 
-  public void send(ScoreDataDto sensitiveData) {
-    log.info("M=SubscriptionCreatedProducer.sendMessage, I=Publicando mensagem na fila, notificação={}",
-        sensitiveData);
-    rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.SENSITIVE_DATA, sensitiveData);
+  public void send(ScoreDataDto scoreData) {
+    log.info("M=ScoreDataPublisher.send, I=Publicando mensagem na fila, notificação={}",
+        scoreData);
+    rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.SCORE_DATA, scoreData);
   }
 }

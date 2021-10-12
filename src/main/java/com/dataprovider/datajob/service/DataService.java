@@ -4,12 +4,13 @@ import com.dataprovider.datajob.model.ScoreDataEntity;
 import com.dataprovider.datajob.model.dto.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.SensitiveDataDto;
 import com.dataprovider.datajob.model.dto.TraceDataDto;
+import java.util.List;
 
 public interface DataService {
 
-  void processAndSendSensitiveData(SensitiveDataDto dto);
-  void processAndSendTraceData(TraceDataDto dto);
-  void processAndSendScoreData(ScoreDataDto dto);
+  void processAndSendSensitiveData(List<SensitiveDataDto> dto);
+  void processAndSendTraceData(List<TraceDataDto> dto);
+  void processAndSendScoreData(List<ScoreDataDto> dto);
 
   ScoreDataEntity getData(String cpf);
 }

@@ -5,6 +5,7 @@ import com.dataprovider.datajob.model.SensitiveDataEntity;
 import com.dataprovider.datajob.model.dto.ScoreDataDto;
 import com.dataprovider.datajob.publisher.SensitiveDataPublisher;
 import com.dataprovider.datajob.service.DataService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class Data {
   private DataService dataService;
 
   @PostMapping( "/save")
-  public ResponseEntity<ScoreDataDto> processProduct(@RequestBody ScoreDataDto dto) {
-    log.info("Receivied={}", dto);
+  public ResponseEntity<List<ScoreDataDto>> processProduct(@RequestBody List<ScoreDataDto> dto) {
+    log.info("Receivied={}", dto.toString());
 //    SensitiveDataEntity sensitiveData = SensitiveDataEntity.builder()
 //        .cpf("425.36.457.96")
 //        .name("Oswaldo")
