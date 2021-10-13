@@ -1,6 +1,7 @@
 package com.dataprovider.datajob.service.impl;
 
 import com.dataprovider.datajob.model.ScoreDataEntity;
+import com.dataprovider.datajob.model.TraceDataEntity;
 import com.dataprovider.datajob.model.dto.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.SensitiveDataDto;
 import com.dataprovider.datajob.model.dto.TraceDataDto;
@@ -8,6 +9,7 @@ import com.dataprovider.datajob.publisher.ScoreDataPublisher;
 import com.dataprovider.datajob.publisher.SensitiveDataPublisher;
 import com.dataprovider.datajob.publisher.TraceDataPublisher;
 import com.dataprovider.datajob.repository.ScoreDataRepository;
+import com.dataprovider.datajob.repository.TraceDataRepository;
 import com.dataprovider.datajob.service.DataService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +29,7 @@ public class DataServiceImpl implements DataService {
   private final SensitiveDataPublisher sensitiveDataPublisher;
 
   //  private final SensitiveDataRepository sensitiveDataRepository;
-//  private final TraceDataRepository traceDataRepository;
+  private final TraceDataRepository traceDataRepository;
   private final ScoreDataRepository scoreDataRepository;
 
   @Override
@@ -37,7 +39,38 @@ public class DataServiceImpl implements DataService {
 
   @Override
   public void processAndSendTraceData(List<TraceDataDto> dtoList) {
-    traceDataPublisher.send(null);
+    log.info("M=ProcessAndSendScoreData, dto={}", dtoList);
+
+    dtoList.parallelStream().forEach(dto -> {
+      LocalDateTime updateAt = LocalDateTime.parse(dto.getUpdatedAt());
+      Optional<TraceDataEntity> traceDataEntity = traceDataRepository.findByCpf(dto.getCpf());
+
+      traceDataEntity.ifPresentOrElse(
+          traceData -> {
+            if (hasUpdate(updateAt, traceData.getUpdateAt())) {
+              log.info("M=ProcessAndSendScoreData, cpf={} hasUpdate, updatedAt={}",
+                  dto.getCpf(),
+                  updateAt);
+
+              traceDataPublisher.send(dto);
+              traceData.setUpdateAt(updateAt);
+              traceDataRepository.saveAndFlush(traceData);
+            }
+            log.info("M=ProcessAndSendScoreData, cpf={} updated", dto.getCpf());
+          }, () -> {
+            log.info("M=ProcessAndSendScoreData, cpf={} was not registered, registeredAt={}",
+                dto.getCpf(),
+                updateAt);
+
+            traceDataPublisher.send(dto);
+            traceDataRepository.save(
+                TraceDataEntity.builder()
+                    .cpf(dto.getCpf())
+                    .updateAt(updateAt)
+                    .build()
+            );
+          });
+    });
   }
 
   @Override
