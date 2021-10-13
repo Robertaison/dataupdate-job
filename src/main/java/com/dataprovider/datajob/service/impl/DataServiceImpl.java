@@ -45,7 +45,7 @@ public class DataServiceImpl implements DataService {
     log.info("M=ProcessAndSendScoreData, dto={}", dtoList);
 
     dtoList.parallelStream().forEach(dto -> {
-      LocalDateTime updateAt = LocalDateTime.parse(dto.getUpdateAt());
+      LocalDateTime updateAt = LocalDateTime.parse(dto.getUpdatedAt());
       Optional<ScoreDataEntity> scoreDataEntity = scoreDataRepository.findByCpf(dto.getCpf());
 
       scoreDataEntity.ifPresentOrElse(

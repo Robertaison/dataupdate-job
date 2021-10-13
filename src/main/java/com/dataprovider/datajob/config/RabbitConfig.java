@@ -53,12 +53,12 @@ public class RabbitConfig {
 
   @Bean
   Binding scoreDataBinder() {
-    return BindingBuilder.bind(sensitiveDataQueue()).to(exchange()).with(SCORE_DATA);
+    return BindingBuilder.bind(scoreDataQueue()).to(exchange()).with(SCORE_DATA);
   }
 
   @Bean
   Binding traceDataBinder() {
-    return BindingBuilder.bind(sensitiveDataQueue()).to(exchange()).with(TRACE_DATA);
+    return BindingBuilder.bind(traceDataQueue()).to(exchange()).with(TRACE_DATA);
   }
 
   @Bean
