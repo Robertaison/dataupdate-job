@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class ScoreDataEntity {
+public class TraceDataUpdateEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

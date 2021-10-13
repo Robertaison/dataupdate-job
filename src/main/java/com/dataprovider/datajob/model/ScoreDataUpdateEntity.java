@@ -2,6 +2,8 @@ package com.dataprovider.datajob.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +17,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class TraceDataEntity {
+public class ScoreDataUpdateEntity {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   private String cpf;

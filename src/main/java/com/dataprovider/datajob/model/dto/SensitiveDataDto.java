@@ -15,4 +15,5 @@ public class SensitiveDataDto {
   private String name;
   private String address;
   private String debts;
+  private String updatedAt;
 }

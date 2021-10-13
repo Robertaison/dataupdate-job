@@ -1,10 +1,12 @@
 package com.dataprovider.datajob.repository;
 
-import com.dataprovider.datajob.model.ScoreDataEntity;
-import com.dataprovider.datajob.model.TraceDataEntity;
+import com.dataprovider.datajob.model.TraceDataUpdateEntity;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TraceDataRepository extends JpaRepository<TraceDataEntity, Integer> {
-  Optional<TraceDataEntity> findByCpf(String cpf);
+@Repository
+public interface TraceDataRepository extends JpaRepository<TraceDataUpdateEntity, Integer> {
+
+  Optional<TraceDataUpdateEntity> findByCpf(String cpf);
 }
