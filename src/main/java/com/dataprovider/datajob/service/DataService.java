@@ -11,6 +11,4 @@ public interface DataService {
   void processAndSendSensitiveData(List<SensitiveDataDto> dto);
   void processAndSendTraceData(List<TraceDataDto> dto);
   void processAndSendScoreData(List<ScoreDataDto> dto);
-
-  ScoreDataUpdateEntity getData(String cpf);
 }

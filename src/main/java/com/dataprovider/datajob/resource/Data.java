@@ -29,14 +29,7 @@ public class Data {
   @PostMapping( "/score")
   public ResponseEntity<List<ScoreDataDto>> processProduct(@RequestBody List<ScoreDataDto> dto) {
     log.info("Receivied={}", dto.toString());
-//    SensitiveDataUpdateEntity sensitiveData = SensitiveDataUpdateEntity.builder()
-//        .cpf("425.36.457.96")
-//        .name("Oswaldo")
-//        .address("Rua Lá")
-//        .debts("Varios")
-//        .build();
 
-//    sensitiveDataPublisher.send(sensitiveData);
     dataService.processAndSendScoreData(dto);
     return ResponseEntity.ok(dto);
   }
@@ -44,14 +37,7 @@ public class Data {
   @PostMapping( "/sensitive")
   public ResponseEntity<List<SensitiveDataDto>> sensitive(@RequestBody List<SensitiveDataDto> dto) {
     log.info("Receivied={}", dto.toString());
-//    SensitiveDataUpdateEntity sensitiveData = SensitiveDataUpdateEntity.builder()
-//        .cpf("425.36.457.96")
-//        .name("Oswaldo")
-//        .address("Rua Lá")
-//        .debts("Varios")
-//        .build();
 
-//    sensitiveDataPublisher.send(sensitiveData);
     dataService.processAndSendSensitiveData(dto);
     return ResponseEntity.ok(dto);
   }
@@ -59,21 +45,9 @@ public class Data {
   @PostMapping( "/trace")
   public ResponseEntity<List<TraceDataDto>> trace(@RequestBody List<TraceDataDto> dto) {
     log.info("Receivied={}", dto.toString());
-//    SensitiveDataUpdateEntity sensitiveData = SensitiveDataUpdateEntity.builder()
-//        .cpf("425.36.457.96")
-//        .name("Oswaldo")
-//        .address("Rua Lá")
-//        .debts("Varios")
-//        .build();
 
-//    sensitiveDataPublisher.send(sensitiveData);
     dataService.processAndSendTraceData(dto);
     return ResponseEntity.ok(dto);
-  }
-
-  @GetMapping("/get")
-  public ScoreDataUpdateEntity get(@RequestParam String cpf) {
-    return dataService.getData(cpf);
   }
 }
 

@@ -141,10 +141,6 @@ public class DataServiceImpl implements DataService {
 
   }
 
-  public ScoreDataUpdateEntity getData(String cpf) {
-    return scoreDataRepository.findByCpf(cpf).get();
-  }
-
   private boolean hasUpdate(LocalDateTime dtoUpdate, LocalDateTime entityUpdate) {
     return dtoUpdate.isAfter(entityUpdate);
   }
