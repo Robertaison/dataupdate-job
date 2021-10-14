@@ -1,8 +1,8 @@
 package com.dataprovider.datajob.resource;
 
-import com.dataprovider.datajob.model.dto.TraceDataDto;
 import com.dataprovider.datajob.model.dto.scoredata.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.sensitivedata.SensitiveDataDto;
+import com.dataprovider.datajob.model.dto.tracedata.TraceDataDto;
 import com.dataprovider.datajob.service.DataService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

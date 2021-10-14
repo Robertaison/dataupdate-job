@@ -1,7 +1,7 @@
 package com.dataprovider.datajob.publisher;
 
 import com.dataprovider.datajob.config.RabbitConfig;
-import com.dataprovider.datajob.model.dto.TraceDataDto;
+import com.dataprovider.datajob.model.dto.tracedata.TraceDataDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

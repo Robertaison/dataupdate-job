@@ -1,8 +1,8 @@
 package com.dataprovider.datajob.service;
 
-import com.dataprovider.datajob.model.dto.TraceDataDto;
 import com.dataprovider.datajob.model.dto.scoredata.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.sensitivedata.SensitiveDataDto;
+import com.dataprovider.datajob.model.dto.tracedata.TraceDataDto;
 import java.util.List;
 
 public interface DataService {
