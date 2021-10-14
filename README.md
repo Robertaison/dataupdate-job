@@ -63,7 +63,7 @@ It's necessary do a post to build rabbit infrastructure necessary to other servi
 [
   {
     "cpf": "40203683865",
-    "customerName": "Robertson Douza",
+    "customerName": "Customer name",
     "address": "Rua Gavião Peixoto",
     "debts": [
       {
