@@ -1,7 +1,7 @@
 package com.dataprovider.datajob.resource;
 
-import com.dataprovider.datajob.model.dto.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.TraceDataDto;
+import com.dataprovider.datajob.model.dto.scoredata.ScoreDataDto;
 import com.dataprovider.datajob.model.dto.sensitivedata.SensitiveDataDto;
 import com.dataprovider.datajob.service.DataService;
 import java.util.List;
