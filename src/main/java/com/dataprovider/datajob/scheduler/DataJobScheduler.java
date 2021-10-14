@@ -11,21 +11,21 @@ public class DataJobScheduler {
   @Autowired
   private DataService dataService;
 
-  @Scheduled(cron = "0 0 0/1 1/1 * ? *")
-  public void sensitiveDataScheduler() {
-    //TODO consulta base externa
-    dataService.processAndSendSensitiveData(null);
-  }
-
-  @Scheduled(cron = "0 15 10 15 * ?")
-  public void traceDataScheduler() {
-    //TODO consulta base externa
-    dataService.processAndSendTraceData(null);
-  }
-
-  @Scheduled(cron = "0 0/10 * 1/1 * ? *")
-  public void scoreDataScheduler() {
-    //TODO consulta base externa
-    dataService.processAndSendScoreData(null);
-  }
+//  @Scheduled(cron = "0 0 0/1 1/1 * ? *")
+//  public void sensitiveDataScheduler() {
+//    //TODO consulta base externa
+//    dataService.processAndSendSensitiveData(null);
+//  }
+//
+//  @Scheduled(cron = "0 15 10 15 * ?")
+//  public void traceDataScheduler() {
+//    //TODO consulta base externa
+//    dataService.processAndSendTraceData(null);
+//  }
+//
+//  @Scheduled(cron = "0 0/10 * 1/1 * ? *")
+//  public void scoreDataScheduler() {
+//    //TODO consulta base externa
+//    dataService.processAndSendScoreData(null);
+//  }
 }
